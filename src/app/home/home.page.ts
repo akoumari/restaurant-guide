@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { StorageService } from '../storage/storage.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private storage: StorageService) {}
 
 }
