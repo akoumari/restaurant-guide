@@ -18,6 +18,7 @@ export class StorageService {
     // If using, define drivers here: await this.storage.defineDriver(/*...*/);
     const storage = await this.storage.create();
     this._storage = storage;
+  
   }
 
   // Create and expose methods that users of this service can
@@ -28,8 +29,8 @@ export class StorageService {
   public async key(): Promise<Object>{
    return await this._storage?.keys();
   }
-  public forEach() : Function {
+  // public forEach() : Function {
 
-   return this._storage?.forEach
-  }
+  //  return this._storage?.forEach
+  // }
 }

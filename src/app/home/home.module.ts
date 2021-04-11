@@ -8,6 +8,7 @@ import { AddRestoComponent } from '../add-resto/add-resto.component';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { HomePageRoutingModule } from './home-routing.module';
 
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { HomePageRoutingModule } from './home-routing.module';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-
+    ReactiveFormsModule
+    
   ],
   declarations: [HomePage, RestoDetailsComponent, AddRestoComponent,
     AboutUsComponent]

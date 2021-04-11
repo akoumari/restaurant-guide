@@ -1,3 +1,57 @@
-<p>
-  add-resto works!
-</p>
+<form class='d-flex flex-column' [formGroup]="restoForm">
+  <div class="d-flex justify-content-between">
+    <h3>Add new Restaurant</h3>
+  </div>
+  <div class="d-flex justify-content-between">
+    <label>
+      Restaurant Name:
+    </label>
+    <input type="text" formControlName="name">
+  </div>
+  <div class="d-flex justify-content-between">
+    <label>
+    Address:
+  </label>
+  
+  <input type="text" formControlName="address">
+  </div>
+<div class="d-flex justify-content-between">
+  <label>
+    Phone:
+  </label>
+  <input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" formControlName="phone">
+    </div>
+  <div class="d-flex justify-content-between">
+    
+      <label>
+        Description:
+      </label>
+      <input type="text" formControlName="desc">
+    
+  </div>
+  <div class="d-flex justify-content-between">
+    <label>
+      Tag(seperate each tag with space):
+    </label>
+    <input type="text" formControlName="tags">
+    
+  </div>
+  <div class="d-flex justify-content-between">
+    <label>
+      Longitude:
+    </label>
+    <input type="text" formControlName="long">
+    
+  </div>
+  <div class="d-flex justify-content-between">
+  <label>
+    Latitude:
+  </label>
+  <input type="text" formControlName="lat">
+    
+  </div>
+  <div class="d-flex justify-content-around">
+    <button (click)="handleSubmit()">Submit</button>
+    
+  </div>
+</form>
