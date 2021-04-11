@@ -16,6 +16,7 @@ export class HomePage implements OnInit {
   page: number
   pageSize: number
   closeResult = '';
+  collectionSize:number
   filterBySearchText = () =>
   matchSorter(this.restaurants, this.searchText, { keys: ["name", "tags"] });
   filterByTagText = () =>
