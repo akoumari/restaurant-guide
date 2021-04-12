@@ -21,10 +21,11 @@ export class AddRestoComponent implements OnInit {
   
   
   
+  @Input() selectedResto 
   @Input() close
   @Input() getRestos : () => void;
   restoForm = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl(""),
     address: new FormControl(''),
     phone: new FormControl(''),
     desc: new FormControl(''),
@@ -33,15 +34,35 @@ export class AddRestoComponent implements OnInit {
     lat: new FormControl(''),
   });
   formData: IRestaurant
-  constructor(private storage: StorageService) { }
+  constructor(private storage: StorageService) {
+    setTimeout(()=>{
+      
+      console.log(this.selectedResto)
+     if(this.selectedResto != null){
+
+       this.restoForm = new FormGroup({
+       name: new FormControl(this.selectedResto.key.name),
+       address: new FormControl(this.selectedResto.key.address),
+       phone: new FormControl(this.selectedResto.key.phone),
+       desc: new FormControl(this.selectedResto.key.desc),
+       tags: new FormControl(this.selectedResto.key.tags.join(" ")),
+       long: new FormControl(this.selectedResto.key.long),
+       lat: new FormControl(this.selectedResto.key.lat),
+      });
+    } 
+   },100)
+    
+   }
 
   ngOnInit() {}
   handleSubmit = ()=>{
+    console.log(this.selectedResto)
     this.formData = {
-      value: this.mongoObjectId(),
+      value: this.selectedResto.value?this.selectedResto.value : this.mongoObjectId(),
       key:{
         ...this.restoForm.value,
-        tags: this.restoForm.value.tags.split(" ")
+        tags: this.restoForm.value.tags.split(" "),
+        stars: 3.5
       }
     
     }

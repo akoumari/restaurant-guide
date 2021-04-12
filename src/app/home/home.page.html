@@ -20,7 +20,7 @@
   </ion-header>
   
   <div id="container" class="container my-3 py-3 ">
-    <button class=" my-3  " (click)="open(content)">
+    <button class=" my-3  " (click)="open(add)">
       ADD
     </button>
     <div  class="d-flex row">
@@ -56,6 +56,11 @@
                 tags:  {{resto.key.tags}}
               </h6> 
             </div>
+            <div class="row">
+              <h6>
+                Rating: {{resto.key.stars}}
+              </h6> 
+            </div>
             
             
           </div>
@@ -67,7 +72,10 @@
           </button> 
         </div>
         <div class="row m-2">
-<button (click)='deleteLoc(resto.value)'>Delete</button>
+          <button (click)='deleteLoc(resto.value)'>Delete</button>
+        </div>
+        <div class="row m-2">
+<button (click)='open(add, resto)'>edit</button>
 </div>
 </div>
 </div>
@@ -81,8 +89,8 @@
       
     </div>
   </div>
-  <ng-template  #content let-modal>
-    <app-add-resto [(getRestos)]="getRestos" [close]="modal"></app-add-resto>
+  <ng-template  #add let-modal>
+    <app-add-resto [selectedResto]="selectedResto" [(getRestos)]="getRestos" [close]="modal"></app-add-resto>
   </ng-template>
 </ion-content>
 <!-- <ion-router-outlet>

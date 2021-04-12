@@ -18,6 +18,7 @@ export class HomePage implements OnInit {
   pageSize: number
   closeResult = '';
   collectionSize:number
+  selectedResto: IRestaurant
   filterBySearchText = () =>
   matchSorter(this.restaurants, this.searchText, { keys: ["name", "tags"] });
   filterByTagText = () =>
@@ -25,10 +26,16 @@ export class HomePage implements OnInit {
     threshold: matchSorter.rankings.EQUAL,
     keys: ["tags"],
   });
+  public editLoc = (key): void=>{
+    this.storage._storage.set(key,{...this.restaurants.filter(k=> k.value == key)[0].key,stars:0})
+    this.restaurants = []
+    this.getRestos()
+    this.collectionSize = this.restaurants.length
+  }
   public deleteLoc = (key): void=>{
     this.storage._storage.remove(key)
     this.restaurants = this.restaurants.filter(loc => loc["value"] != key) 
-  
+    this.collectionSize = this.restaurants.length
   }
   constructor(private storage: StorageService, private modalService: NgbModal) {
     this.page = 1
@@ -56,8 +63,8 @@ export class HomePage implements OnInit {
     console.log('LOL')
   
     this.storage._storage.forEach((key, value, index) => {
-      console.log(key)
-      console.log(value)
+      // console.log(key)
+      // console.log(value)
       if(this.restaurants.filter(gtag => (gtag.value==value)).length <=0){
         this.restaurants.push({key,value})
 
@@ -66,15 +73,18 @@ export class HomePage implements OnInit {
       // this.restaurants = [...this.restaurants.filter(gtag => (gtag.value==value)),{key,value}]
     });
   }
-  open(content) {
-    this.storage._storage.forEach((key, value, index) => {
-      console.log(key)
-      console.log(value)
+  open(content, resto) {
+    // this.storage._storage.forEach((key, value, index) => {
+    //   console.log(key)
+    //   console.log(value)
       
-      //this.restaurants = [...this.restaurants,{key,value}]
-    });
-    console.log(this.storage)
-
+    //   //this.restaurants = [...this.restaurants,{key,value}]
+    // });
+    // console.log(this.storage)
+if(resto){
+  this.selectedResto = resto
+  console.log(resto)
+}
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
