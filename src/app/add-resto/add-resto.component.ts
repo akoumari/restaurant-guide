@@ -58,7 +58,7 @@ export class AddRestoComponent implements OnInit {
   handleSubmit = ()=>{
     console.log(this.selectedResto)
     this.formData = {
-      value: this.selectedResto.value?this.selectedResto.value : this.mongoObjectId(),
+      value: this.selectedResto?this.selectedResto.value : this.mongoObjectId(),
       key:{
         ...this.restoForm.value,
         tags: this.restoForm.value.tags.split(" "),
