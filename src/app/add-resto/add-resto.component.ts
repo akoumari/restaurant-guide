@@ -22,6 +22,7 @@ export class AddRestoComponent implements OnInit {
   
   
   @Input() close
+  @Input() getRestos : () => void;
   restoForm = new FormGroup({
     name: new FormControl(''),
     address: new FormControl(''),
@@ -51,6 +52,7 @@ export class AddRestoComponent implements OnInit {
       console.log(value)
      
     });
+    
     this.close.close()
 
   }

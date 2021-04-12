@@ -7,7 +7,7 @@ import { RestoDetailsComponent } from '../resto-details/resto-details.component'
 import { AddRestoComponent } from '../add-resto/add-resto.component';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { HomePageRoutingModule } from './home-routing.module';
-
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
@@ -17,7 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbPaginationModule
     
   ],
   declarations: [HomePage, RestoDetailsComponent, AddRestoComponent,
