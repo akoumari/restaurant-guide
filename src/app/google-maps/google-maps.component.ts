@@ -174,14 +174,15 @@ export class GoogleMapComponent {
 
     }
 
-    public addMarker(lat: number, lng: number): void {
+    public addMarker(lat: number, lng: number, label: string): void {
 
         let latLng = new google.maps.LatLng(lat, lng);
 
         let marker = new google.maps.Marker({
             map: this.map,
             animation: google.maps.Animation.DROP,
-            position: latLng
+            position: latLng,
+            label: label
         });
 
         this.markers.push(marker);

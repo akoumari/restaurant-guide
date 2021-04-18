@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
   testMarker(){
 
     let center = this.mapComponent.map.getCenter();
-    this.mapComponent.addMarker(center.lat(), center.lng());
+    this.mapComponent.addMarker(center.lat(), center.lng(), "You");
 
 }
   restaurants: IRestaurant[] = []
@@ -181,7 +181,7 @@ this.filterBySearchText()
 if(resto){
   this.selectedResto = resto
   console.log(resto)
-  this.mapComponent.addMarker( resto.key.lat, resto.key.long)
+  this.mapComponent.addMarker( resto.key.lat, resto.key.long, resto.key.name)
 
 }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {

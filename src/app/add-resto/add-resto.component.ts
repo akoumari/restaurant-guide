@@ -19,7 +19,10 @@ export class AddRestoComponent implements OnInit {
     }).toLowerCase();
   };
   
-  
+  getLoc =  () =>{
+    let coords = {long: (Math.random() * ((-79.3) - (-79.4)) + (-79.4)), lat:(Math.random() * ((43.8) - (43.6)) + (43.6))};
+   return  coords
+  }
   
   @Input() selectedResto 
   @Input() close
@@ -30,8 +33,7 @@ export class AddRestoComponent implements OnInit {
     phone: new FormControl(''),
     desc: new FormControl(''),
     tags: new FormControl(''),
-    long: new FormControl(''),
-    lat: new FormControl(''),
+
   });
   formData: IRestaurant
   constructor(private storage: StorageService) {
@@ -46,8 +48,7 @@ export class AddRestoComponent implements OnInit {
        phone: new FormControl(this.selectedResto.key.phone),
        desc: new FormControl(this.selectedResto.key.desc),
        tags: new FormControl(this.selectedResto.key.tags.join(" ")),
-       long: new FormControl(this.selectedResto.key.long),
-       lat: new FormControl(this.selectedResto.key.lat),
+
       });
     } 
    },100)
@@ -57,10 +58,13 @@ export class AddRestoComponent implements OnInit {
   ngOnInit() {}
   handleSubmit = ()=>{
     console.log(this.selectedResto)
+   let coords = {...this.getLoc()}
     this.formData = {
       value: this.selectedResto?this.selectedResto.value : this.mongoObjectId(),
       key:{
         ...this.restoForm.value,
+        lat: coords.lat,
+        long: coords.long,
         tags: this.restoForm.value.tags.split(" "),
         stars: 3.5,
         edited: true
