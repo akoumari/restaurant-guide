@@ -158,7 +158,7 @@ export class GoogleMapComponent {
 
                 let mapOptions = {
                     center: latLng,
-                    zoom: 15
+                    zoom: 10
                 };
 
                 this.map = new google.maps.Map(this.element.nativeElement, mapOptions);

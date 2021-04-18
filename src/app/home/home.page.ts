@@ -180,9 +180,15 @@ this.filterBySearchText()
     // console.log(this.storage)
 
 if(resto){
-  this.selectedResto = resto
-  console.log(resto)
-  this.mapComponent.addMarker( resto.key.lat, resto.key.long, resto.key.name)
+  if(resto == 'no'){
+
+    this.selectedResto = null
+  }else{
+
+    this.selectedResto = resto
+    console.log(resto)
+    this.mapComponent.addMarker( resto.key.lat, resto.key.long, resto.key.name)
+  }
 
 }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {

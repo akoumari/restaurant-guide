@@ -63,10 +63,10 @@ export class AddRestoComponent implements OnInit {
       value: this.selectedResto?this.selectedResto.value : this.mongoObjectId(),
       key:{
         ...this.restoForm.value,
-        lat: coords.lat,
-        long: coords.long,
+        lat: this.selectedResto.key.lat?this.selectedResto.key.lat:coords.lat,
+        long:  this.selectedResto.key.long?this.selectedResto.key.long:coords.long,
         tags: this.restoForm.value.tags.split(" "),
-        stars: 3.5,
+        stars:  this.selectedResto.key.stars?this.selectedResto.key.stars:3.5,
         edited: true
       }
     
