@@ -26,3 +26,14 @@
 #container a {
   text-decoration: none;
 }
+google-map {
+
+  display: block !important;
+  width: 60vw;
+  height: 30vh;
+
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -0%);
+  padding: 1em 3em;
+}

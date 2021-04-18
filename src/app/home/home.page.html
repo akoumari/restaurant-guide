@@ -21,7 +21,10 @@
     <button class=" my-3 mx-1 btn btn-sm btn-danger " (click)="clearTagAndSearch()">
       Clear filters
     </button>
+    
+    
     <div  class="d-flex row">
+      <google-map apiKey=""></google-map>
       
       <div class="my-2 col-12"  *ngFor="let resto of restaurants | slice: (page-1) * pageSize : page * pageSize">
         
@@ -72,7 +75,7 @@
           <div class="">
           <div class="row m-2">
           <button
-            (click)="open(content)">
+            (click)="open(content,resto)">
             info
           </button> 
         </div>
@@ -86,6 +89,7 @@
 </div>
 <ng-template  #content let-modal>
           <app-resto-details [resto]="resto" ></app-resto-details>
+          
         </ng-template>
       </div>
     </div>  <button class=" my-3 mx-1 btn btn-sm btn-success " (click)="open(add)">
@@ -99,6 +103,7 @@
 
   <ng-template  #add let-modal>
     <app-add-resto [selectedResto]="selectedResto" [(getRestos)]="getRestos" [close]="modal"></app-add-resto>
+    
   </ng-template>
 </ion-content>
 <!-- <ion-router-outlet>

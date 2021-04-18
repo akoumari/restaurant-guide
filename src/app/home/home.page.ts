@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from '../storage.service';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { IRestaurant } from '../models/restaurant';
 import { matchSorter } from "match-sorter";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { StarRatingComponent } from 'ng-starrating';
+import { GoogleMapComponent } from '../google-maps/google-maps.component';
+
 
 
 @Component({
@@ -13,6 +16,13 @@ import { StarRatingComponent } from 'ng-starrating';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  @ViewChild(GoogleMapComponent) mapComponent: GoogleMapComponent;
+  testMarker(){
+
+    let center = this.mapComponent.map.getCenter();
+    this.mapComponent.addMarker(center.lat(), center.lng());
+
+}
   restaurants: IRestaurant[] = []
   searchText:string
   tagSearch:string
@@ -22,31 +32,17 @@ export class HomePage implements OnInit {
   closeResult = '';
   collectionSize:number
   selectedResto: IRestaurant
-  filterBySearchText = () =>
-this.restaurants = [...matchSorter(this.restaurants, this.searchText, { keys: ["key.name", "key.tags"] })]
-  filterByTagText = () =>
-  this.restaurants = [...matchSorter(this.restaurants, this.tagSearch, {
-    threshold: matchSorter.rankings.EQUAL,
-    keys: ["key.tags"],
-  })]
-  public editLoc = (key): void=>{
-    this.storage._storage.set(key,{...this.restaurants.filter(k=> k.value == key)[0].key,stars:0})
-    this.restaurants = []
-    this.getRestos()
-    this.collectionSize = this.restaurants.length
-  }
-  public deleteLoc = (key): void=>{
-    this.storage._storage.remove(key)
-    this.restaurants = this.restaurants.filter(loc => loc["value"] != key) 
-    this.collectionSize = this.restaurants.length
-  }
+  
+  
   constructor(private storage: StorageService, private modalService: NgbModal) {
     this.page = 1
     this.pageSize = 6
     this.totalstars = 5
     this.searchText = ""
+    this.tagSearch = ""
     setTimeout(()=>{
       this.getRestos()
+      this.testMarker()
     },1000)
     setInterval(()=>{
       this.getRestos()
@@ -54,16 +50,46 @@ this.restaurants = [...matchSorter(this.restaurants, this.searchText, { keys: ["
     },1000)
     
   }
+
+
+
+
+  filterBySearchText = () =>{
+this.restaurants = [...matchSorter(this.restaurants, this.searchText, { keys: ["key.name", "key.tags"] })]
+  
+}
+
+filterByTagText = () =>{
+  this.restaurants = [...matchSorter(this.restaurants, this.tagSearch, {
+    threshold: matchSorter.rankings.EQUAL,
+    keys: ["key.tags"],
+  })]
+}
+
+  public editLoc = (key): void=>{
+    this.storage._storage.set(key,{...this.restaurants.filter(k=> k.value == key)[0].key,stars:0})
+    this.restaurants = []
+    this.getRestos()
+    this.collectionSize = this.restaurants.length
+  }
+
+  public deleteLoc = (key): void=>{
+    this.storage._storage.remove(key)
+    this.restaurants = this.restaurants.filter(loc => loc["value"] != key) 
+    this.collectionSize = this.restaurants.length
+  }
+
   handleTag(tag){
     console.log(tag)
     this.tagSearch = tag
     this.filterByTagText()
   }
+
   onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}, resto) {
        
       this.storage.set(resto.value, {...resto.key, stars: $event.newValue})
-      this.restaurants = [...this.restaurants.filter(gtag => (gtag.value!==resto.value)), {key:{...resto.key, stars: $event.newValue},value: resto.value}].sort(function(a, b){
-  
+      this.restaurants = [...this.restaurants.filter(gtag => (gtag.value!==resto.value)), {key:{...resto.key, stars: $event.newValue},value: resto.value}].sort(function(a, b)
+      {
         var nameA = a.key.name.toUpperCase(); // ignore upper and lowercase
         var nameB = b.key.name.toUpperCase(); // ignore upper and lowercase
         if (nameA < nameB) {
@@ -76,15 +102,15 @@ this.restaurants = [...matchSorter(this.restaurants, this.searchText, { keys: ["
         // names must be equal
         return 0;
       });
-    
-     
   }
+
   clearTagAndSearch(){
     this.tagSearch = ""
     this.searchText = ""
   }
+
   ngOnInit(): void {
-    
+   
     // setTimeout(()=>{
     //   this.getRestos()
     //   this.page = 1
@@ -92,6 +118,10 @@ this.restaurants = [...matchSorter(this.restaurants, this.searchText, { keys: ["
     // },1000)
     // this.getRestos()
   }
+  handleMarker(resto): void{
+    
+  }
+  
   getRestos() : void {
     console.log('LOL')
   console.log(this.searchText)
@@ -147,9 +177,12 @@ this.filterBySearchText()
     //   //this.restaurants = [...this.restaurants,{key,value}]
     // });
     // console.log(this.storage)
+
 if(resto){
   this.selectedResto = resto
   console.log(resto)
+  this.mapComponent.addMarker( resto.key.lat, resto.key.long)
+
 }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

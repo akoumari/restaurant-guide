@@ -10,9 +10,6 @@
     }
   },
   "cordova": {
-    "preference":{
-      "name":"GOOGLE_MAPS_IOS_API_KEY",
-      "value":"(api key)" 
-    }
+   
   }
 }

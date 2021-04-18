@@ -10,6 +10,9 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RatingModule } from 'ng-starrating';
+import { GoogleMapComponent } from '../google-maps/google-maps.component';
+
+
 
 @NgModule({
   imports: [
@@ -23,6 +26,6 @@ import { RatingModule } from 'ng-starrating';
     
   ],
   declarations: [HomePage, RestoDetailsComponent, AddRestoComponent,
-    AboutUsComponent]
+    AboutUsComponent,GoogleMapComponent]
 })
 export class HomePageModule {}

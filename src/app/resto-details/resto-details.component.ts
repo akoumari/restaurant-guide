@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+
+
 
 import { IRestaurant } from "../models/restaurant"
 import { StorageService } from '../storage.service';
@@ -9,8 +11,11 @@ import { StorageService } from '../storage.service';
 })
 export class RestoDetailsComponent implements OnInit {
   @Input() resto
+
   constructor(private storage: StorageService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
 }
