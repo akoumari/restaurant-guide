@@ -16,7 +16,7 @@
  
   
   <div id="container" class="container my-3 py-3 ">
-    <input [(ngModel)]="searchText" >
+    <input [(ngModel)]="searchText" placeholder="Search">
     
     <button class=" my-3 mx-1 btn btn-sm btn-danger " (click)="clearTagAndSearch()">
       Clear filters
@@ -24,11 +24,11 @@
     
     
     <div  class="d-flex row">
-      <google-map apiKey=""></google-map>
+      <google-map class="rounded shadow-on-dark border border-light" apiKey=""></google-map>
       
       <div class="my-2 col-12"  *ngFor="let resto of restaurants | slice: (page-1) * pageSize : page * pageSize">
         
-        <div class=" justify-content-center align-items-center d-flex ">
+        <div class="rounded shadow-on-dark border border-light py-2 justify-content-center align-items-center d-flex ">
           
           
           <div class="col col-7">
@@ -55,7 +55,7 @@
             <div class="row d-flex  align-items-center">
               <h6>
                 tags: </h6>   <div  *ngFor="let tag of resto.key.tags">
-               <span (click)="handleTag(tag)" class="badge badge-info mx-1 mb-1 d-flex justify-content-center align-items-center " >
+               <span role="button" style="font-size: large;" (click)="handleTag(tag)" class="badge badge-info mx-1 mb-1 d-flex justify-content-center align-items-center " >
 
                  {{tag}}
                </span>

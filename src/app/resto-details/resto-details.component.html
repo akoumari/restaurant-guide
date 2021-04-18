@@ -1,4 +1,4 @@
-<div  style="min-height: 25vh" class=" justify-content-center align-items-center d-flex ">
+<div  style="min-height: 25vh; " class=" justify-content-center align-items-center d-flex ">
           
           
   <div class="col col-7">
@@ -24,8 +24,14 @@
     </div>
     <div class="row">
       <h6>
-        tags:  {{resto.key.tags}}
+        tags: 
       </h6> 
+   <div  *ngFor="let tag of resto.key.tags">
+      <span style="font-size: large;"  class="badge badge-info mx-1 mb-1 d-flex justify-content-center align-items-center " >
+
+        {{tag}}
+      </span>
+     </div>
     </div>
     
    
