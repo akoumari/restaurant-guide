@@ -17,10 +17,8 @@
   
   <div id="container" class="container my-3 py-3 ">
     <input [(ngModel)]="searchText" >
-    <button class=" my-3 mx-1 btn btn-sm btn-success " (click)="open(add)">
-      ADD
-    </button>
-    <button class=" my-3 btn btn-sm btn-danger " (click)="clearTagAndSearch()">
+    
+    <button class=" my-3 mx-1 btn btn-sm btn-danger " (click)="clearTagAndSearch()">
       Clear filters
     </button>
     <div  class="d-flex row">
@@ -90,12 +88,15 @@
           <app-resto-details [resto]="resto" ></app-resto-details>
         </ng-template>
       </div>
-    </div>
+    </div>  <button class=" my-3 mx-1 btn btn-sm btn-success " (click)="open(add)">
+    Add Restaurant
+  </button>
     <div class="d-flex my-3 py-3 justify-content-center">
       <ngb-pagination [collectionSize]="collectionSize" [pageSize]='pageSize' [(page)]="page" aria-label="Default pagination"></ngb-pagination>
       
     </div>
   </div>
+
   <ng-template  #add let-modal>
     <app-add-resto [selectedResto]="selectedResto" [(getRestos)]="getRestos" [close]="modal"></app-add-resto>
   </ng-template>
