@@ -63,13 +63,16 @@ export class AddRestoComponent implements OnInit {
       value: this.selectedResto?this.selectedResto.value : this.mongoObjectId(),
       key:{
         ...this.restoForm.value,
-        lat: this.selectedResto.key.lat?this.selectedResto.key.lat:coords.lat,
-        long:  this.selectedResto.key.long?this.selectedResto.key.long:coords.long,
         tags: this.restoForm.value.tags.split(" "),
-        stars:  this.selectedResto.key.stars?this.selectedResto.key.stars:3.5,
+        lat: coords.lat,
+        long:  coords.long,
+stars:  3.5,
         edited: true
       }
     
+    }
+    if(this.selectedResto!=null){
+      this.formData = {...this.formData, key: {...this.formData.key,  lat: this.selectedResto.key.lat,       long:  this.selectedResto.key.long,stars:  this.selectedResto.key.stars}}
     }
     console.log(this.formData)
     this.storage.set(this.formData.value, this.formData.key)
@@ -78,15 +81,8 @@ export class AddRestoComponent implements OnInit {
       console.log(value)
      
     });
-    this.selectedResto = null
-    this.restoForm =  new FormGroup({
-      name: new FormControl(""),
-      address: new FormControl(''),
-      phone: new FormControl(''),
-      desc: new FormControl(''),
-      tags: new FormControl(''),
-  
-    });
+   
+
     this.close.close()
 
   }
