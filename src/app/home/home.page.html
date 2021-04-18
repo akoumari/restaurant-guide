@@ -12,16 +12,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Restaurant App</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" >
+ 
   
   <div id="container" class="container my-3 py-3 ">
-    <button class=" my-3  " (click)="open(add)">
+    <input [(ngModel)]="searchText" >
+    <button class=" my-3 mx-1 btn btn-sm btn-success " (click)="open(add)">
       ADD
+    </button>
+    <button class=" my-3 btn btn-sm btn-danger " (click)="clearTagAndSearch()">
+      Clear filters
     </button>
     <div  class="d-flex row">
       
@@ -51,15 +51,22 @@
                 Description:  {{resto.key.desc}}
               </h6> 
             </div>
-            <div class="row">
+            <div class="row d-flex  align-items-center">
               <h6>
-                tags:  {{resto.key.tags}}
-              </h6> 
+                tags: </h6>   <div  *ngFor="let tag of resto.key.tags">
+               <span (click)="handleTag(tag)" class="badge badge-info mx-1 mb-1 d-flex justify-content-center align-items-center " >
+
+                 {{tag}}
+               </span>
+              </div>
+             
+              
             </div>
             <div class="row">
               <h6>
                 Rating: {{resto.key.stars}}
               </h6> 
+              <star-rating [value]="resto.key.stars" [totalstars]="totalstars" checkedcolor="yellow" uncheckedcolor="white" size="24px" readonly="{{false}}" (rate)="onRate($event,resto)"></star-rating>
             </div>
             
             

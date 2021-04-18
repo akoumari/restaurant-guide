@@ -62,7 +62,8 @@ export class AddRestoComponent implements OnInit {
       key:{
         ...this.restoForm.value,
         tags: this.restoForm.value.tags.split(" "),
-        stars: 3.5
+        stars: 3.5,
+        edited: true
       }
     
     }

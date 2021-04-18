@@ -9,7 +9,7 @@ import { AboutUsComponent } from '../about-us/about-us.component';
 import { HomePageRoutingModule } from './home-routing.module';
 import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { RatingModule } from 'ng-starrating';
 
 @NgModule({
   imports: [
@@ -18,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     IonicModule,
     HomePageRoutingModule,
     ReactiveFormsModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    RatingModule
     
   ],
   declarations: [HomePage, RestoDetailsComponent, AddRestoComponent,

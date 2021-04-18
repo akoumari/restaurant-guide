@@ -4,6 +4,8 @@ import { AboutUsComponent } from '../about-us/about-us.component';
 import { IRestaurant } from '../models/restaurant';
 import { matchSorter } from "match-sorter";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { StarRatingComponent } from 'ng-starrating';
+
 
 @Component({
   selector: 'app-home',
@@ -15,17 +17,18 @@ export class HomePage implements OnInit {
   searchText:string
   tagSearch:string
   page: number
+  totalstars: number
   pageSize: number
   closeResult = '';
   collectionSize:number
   selectedResto: IRestaurant
   filterBySearchText = () =>
-  matchSorter(this.restaurants, this.searchText, { keys: ["name", "tags"] });
+this.restaurants = [...matchSorter(this.restaurants, this.searchText, { keys: ["key.name", "key.tags"] })]
   filterByTagText = () =>
-  matchSorter(this.restaurants, this.tagSearch, {
+  this.restaurants = [...matchSorter(this.restaurants, this.tagSearch, {
     threshold: matchSorter.rankings.EQUAL,
-    keys: ["tags"],
-  });
+    keys: ["key.tags"],
+  })]
   public editLoc = (key): void=>{
     this.storage._storage.set(key,{...this.restaurants.filter(k=> k.value == key)[0].key,stars:0})
     this.restaurants = []
@@ -40,6 +43,8 @@ export class HomePage implements OnInit {
   constructor(private storage: StorageService, private modalService: NgbModal) {
     this.page = 1
     this.pageSize = 6
+    this.totalstars = 5
+    this.searchText = ""
     setTimeout(()=>{
       this.getRestos()
     },1000)
@@ -49,7 +54,35 @@ export class HomePage implements OnInit {
     },1000)
     
   }
+  handleTag(tag){
+    console.log(tag)
+    this.tagSearch = tag
+    this.filterByTagText()
+  }
+  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}, resto) {
+       
+      this.storage.set(resto.value, {...resto.key, stars: $event.newValue})
+      this.restaurants = [...this.restaurants.filter(gtag => (gtag.value!==resto.value)), {key:{...resto.key, stars: $event.newValue},value: resto.value}].sort(function(a, b){
   
+        var nameA = a.key.name.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.key.name.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+      
+        // names must be equal
+        return 0;
+      });
+    
+     
+  }
+  clearTagAndSearch(){
+    this.tagSearch = ""
+    this.searchText = ""
+  }
   ngOnInit(): void {
     
     // setTimeout(()=>{
@@ -61,18 +94,51 @@ export class HomePage implements OnInit {
   }
   getRestos() : void {
     console.log('LOL')
-  
-    this.storage._storage.forEach((key, value, index) => {
+  console.log(this.searchText)
+    if(!this.tagSearch && !this.searchText){
+      this.storage._storage.forEach((key, value, index) => {
       // console.log(key)
       // console.log(value)
-      if(this.restaurants.filter(gtag => (gtag.value==value)).length <=0){
+      if(this.restaurants.filter(gtag => (gtag.value==value)).length <=0 ){
         this.restaurants.push({key,value})
-
-        this.collectionSize = this.restaurants.length
-      }
-      // this.restaurants = [...this.restaurants.filter(gtag => (gtag.value==value)),{key,value}]
-    });
+this.restaurants.sort(function(a, b){
+  
+  var nameA = a.key.name.toUpperCase(); // ignore upper and lowercase
+  var nameB = b.key.name.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
   }
+  if (nameA > nameB) {
+    return 1;
+  }
+
+  // names must be equal
+  return 0;
+});
+        this.collectionSize = this.restaurants.length
+      }else if(key.edited == true){
+        this.storage.set(value, {...key, edited: false})
+        this.restaurants = [...this.restaurants.filter(gtag => (gtag.value!==value)), {key:{...key, edited: false},value}].sort(function(a, b){
+  
+          var nameA = a.key.name.toUpperCase(); // ignore upper and lowercase
+          var nameB = b.key.name.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        });
+      }
+      // this.resta}urants = [...this.restaurants.filter(gtag => (gtag.value==value)),{key,value}]
+    });
+  }if(this.searchText != ""){
+this.filterBySearchText()
+  }
+}
   open(content, resto) {
     // this.storage._storage.forEach((key, value, index) => {
     //   console.log(key)
@@ -91,7 +157,6 @@ if(resto){
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
   public getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
