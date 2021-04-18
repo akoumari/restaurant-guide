@@ -78,7 +78,15 @@ export class AddRestoComponent implements OnInit {
       console.log(value)
      
     });
-    
+    this.selectedResto = null
+    this.restoForm =  new FormGroup({
+      name: new FormControl(""),
+      address: new FormControl(''),
+      phone: new FormControl(''),
+      desc: new FormControl(''),
+      tags: new FormControl(''),
+  
+    });
     this.close.close()
 
   }

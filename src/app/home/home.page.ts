@@ -148,6 +148,7 @@ this.restaurants.sort(function(a, b){
         this.collectionSize = this.restaurants.length
       }else if(key.edited == true){
         this.storage.set(value, {...key, edited: false})
+        this.selectedResto = null
         this.restaurants = [...this.restaurants.filter(gtag => (gtag.value!==value)), {key:{...key, edited: false},value}].sort(function(a, b){
   
           var nameA = a.key.name.toUpperCase(); // ignore upper and lowercase
